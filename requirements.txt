@@ -1,0 +1,4 @@
+streamlit>=1.37
+jsonschema>=4.22
+pandas>=2.0
+

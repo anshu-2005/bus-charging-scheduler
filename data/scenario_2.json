@@ -1,0 +1,71 @@
+{
+  "scenario_id": "scenario_2_bunched_start",
+  "label": "Scenario 2 — Bunched start",
+  "service_date": "2026-06-02",
+  "constants": {
+    "battery_range_km": 240,
+    "charge_duration_min": 25,
+    "cruise_speed_kmph": 60
+  },
+  "operators": [
+    { "operator_id": "kpn", "name": "KPN" },
+    { "operator_id": "freshbus", "name": "Freshbus" },
+    { "operator_id": "flixbus", "name": "Flixbus" }
+  ],
+  "stations": [
+    { "station_id": "A", "name": "A", "chargers": { "count": 1 } },
+    { "station_id": "B", "name": "B", "chargers": { "count": 1 } },
+    { "station_id": "C", "name": "C", "chargers": { "count": 1 } },
+    { "station_id": "D", "name": "D", "chargers": { "count": 1 } }
+  ],
+  "routes": [
+    {
+      "route_id": "blr_kochi_main",
+      "name": "Bengaluru ↔ Kochi",
+      "stops": ["Bengaluru", "A", "B", "C", "D", "Kochi"],
+      "segments_km": [100, 120, 100, 120, 100],
+      "scheduled_charge_stations": ["A", "B", "C", "D"]
+    }
+  ],
+  "buses": [
+    { "bus_id": "bus-BK-01", "operator_id": "kpn", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:00" },
+    { "bus_id": "bus-BK-02", "operator_id": "freshbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:08" },
+    { "bus_id": "bus-BK-03", "operator_id": "flixbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:16" },
+    { "bus_id": "bus-BK-04", "operator_id": "kpn", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:24" },
+    { "bus_id": "bus-BK-05", "operator_id": "freshbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:32" },
+    { "bus_id": "bus-BK-06", "operator_id": "flixbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:40" },
+    { "bus_id": "bus-BK-07", "operator_id": "kpn", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "19:48" },
+    { "bus_id": "bus-BK-08", "operator_id": "freshbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "20:03" },
+    { "bus_id": "bus-BK-09", "operator_id": "flixbus", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "20:18" },
+    { "bus_id": "bus-BK-10", "operator_id": "kpn", "direction": "BENGALURU_TO_KOCHI", "route_id": "blr_kochi_main", "departure_time": "20:33" },
+
+    { "bus_id": "bus-KB-01", "operator_id": "freshbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:00" },
+    { "bus_id": "bus-KB-02", "operator_id": "flixbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:08" },
+    { "bus_id": "bus-KB-03", "operator_id": "kpn", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:16" },
+    { "bus_id": "bus-KB-04", "operator_id": "freshbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:24" },
+    { "bus_id": "bus-KB-05", "operator_id": "flixbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:32" },
+    { "bus_id": "bus-KB-06", "operator_id": "kpn", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:40" },
+    { "bus_id": "bus-KB-07", "operator_id": "freshbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "19:48" },
+    { "bus_id": "bus-KB-08", "operator_id": "flixbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "20:03" },
+    { "bus_id": "bus-KB-09", "operator_id": "kpn", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "20:18" },
+    { "bus_id": "bus-KB-10", "operator_id": "freshbus", "direction": "KOCHI_TO_BENGALURU", "route_id": "blr_kochi_main", "departure_time": "20:33" }
+  ],
+  "weights": { "individual": 1.0, "operator": 1.0, "overall": 1.0 },
+  "rules": {
+    "hard": [
+      { "id": "charger_capacity", "enabled": true },
+      { "id": "range_feasible", "enabled": true },
+      { "id": "no_backtracking", "enabled": true },
+      { "id": "fixed_charge_duration", "enabled": true }
+    ],
+    "soft": [
+      { "id": "individual_total_wait", "enabled": true, "weight_key": "individual" },
+      { "id": "operator_delay_variance", "enabled": true, "weight_key": "operator" },
+      { "id": "overall_total_time", "enabled": true, "weight_key": "overall" }
+    ],
+    "dispatch": [
+      { "id": "default_priority", "enabled": true }
+    ]
+  }
+}
+
